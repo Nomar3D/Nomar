@@ -2257,6 +2257,7 @@
                 + '</div>'
                 + '<p style="color:#a0d4ff;font-size:0.85rem;">Une fois le virement effectué, ta commande sera validée sous 24h.</p>'
                 + '</div>';
+            setTimeout(showPostPurchaseBanner, 3000);
         }
 
         function afficherVirementMystere() {
@@ -3071,8 +3072,16 @@
         function fermerBannerePWA() {
             var banner = document.getElementById('pwa-banner');
             if (banner) banner.style.display = 'none';
-            // Ne plus montrer pendant 3 jours
             localStorage.setItem('pwa_dismissed', Date.now());
+        }
+
+        function showPostPurchaseBanner() {
+            if (window.matchMedia('(display-mode: standalone)').matches) return;
+            var banner = document.getElementById('pwa-banner');
+            if (!banner) return;
+            // Changer le texte pour après achat
+            banner.querySelector('p:last-child').textContent = "Content(e) du site ? Installe l'appli !";
+            banner.style.display = 'flex';
         }
 
         // Afficher après 30 secondes
